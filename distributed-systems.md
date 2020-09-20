@@ -17,3 +17,11 @@ The level of heterogeneity in such systems is significant in terms of networks, 
 Structure in terms of separately specified `components` and their `interrelationships`. Major concerns are to make the system `reliable`, `manageable`, `adaptable` and `cost-effective`. The architectural design of a building has similar aspects – it determines not only its appearance but also its general structure and architectural style (gothic, neo-classic, modernist...).  
 In this table you can see the characteristics of the three generations of distributed systems:
 ![Generations of DS](./img/sec2-1.png)
+
+#### Architectural Elements
+What are the elements composing a model and how this elements communicate?  
+The entities that communicate in a DS are typically `processes`, giving name to the field of `inter-process communication`. There are **two** exceptions: `sensors` which do not have a process abstraction (in this case we consider them nodes) and in moders DS, `threads` are used more often than processes.  
+From a programming perspective, this classification is not enough and some other elements are introduced:
+* `Objects`: introduced to enable and encourage the use of `object-oriented approaches` in distributed. In distributed object-based approaches, `Objects` are accessed via `interfaces`, with an associated `interface definition language (or IDL)` providing a specification of the methods defined on an object.
+* `Components`: component technology has emerged as a direct response to Object approach weaknesses. `Components` resemble objects in that they offer problem-oriented abstractions for building distributed systems and are **also accessed through interfaces**. The key difference is that **components specify not only their (provided) interfaces but also the assumptions they make in terms of other components/interfaces**, making all dependencies explicit and providing a more complete contract for system construction.
+* `Web services`: the third important paradigm for the development of distributed systems. Web services are closely related to objects and components, again taking an approach based on `encapsulation of behaviour` and `access through interfaces`. In contrast, however, web services are `intrinsically integrated into the World Wide Web`, using web standards to represent and discover services.

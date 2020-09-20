@@ -1,6 +1,6 @@
 # Distributed Systems
 
-NEXT: Coulouris, 2.3
+NEXT: Coulouris, 59 Communication Paradigms
 
 Some concerns of distributed systems are:
 * **Security**: a DS is so secre as the most unsecure part of it.
