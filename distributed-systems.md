@@ -14,3 +14,6 @@ The level of heterogeneity in such systems is significant in terms of networks, 
 * `Contemporary distributed systems`: physical architecture with a significant increase in the level of heterogeneity embracing, for example, the tiniest embedded devices utilized in ubiquitous computing through to complex computational elements found in `Grid computing`. These systems deploy an increasingly varied set of networking technologies and offer a wide variety of applications and services. Such systems potentially involve up to hundreds of thousands of nodes.
 
 ### Architectural Models
+Structure in terms of separately specified `components` and their `interrelationships`. Major concerns are to make the system `reliable`, `manageable`, `adaptable` and `cost-effective`. The architectural design of a building has similar aspects – it determines not only its appearance but also its general structure and architectural style (gothic, neo-classic, modernist...).  
+In this table you can see the characteristics of the three generations of distributed systems:
+![Generations of DS](./img/sec2-1.png)
