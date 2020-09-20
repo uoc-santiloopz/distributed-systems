@@ -16,7 +16,7 @@ The level of heterogeneity in such systems is significant in terms of networks, 
 ### Architectural Models
 Structure in terms of separately specified `components` and their `interrelationships`. Major concerns are to make the system `reliable`, `manageable`, `adaptable` and `cost-effective`. The architectural design of a building has similar aspects – it determines not only its appearance but also its general structure and architectural style (gothic, neo-classic, modernist...).  
 In this table you can see the characteristics of the three generations of distributed systems:
-![Generations of DS](./img/sec2-1.png)
+![Generations of DS](./img/sec2-1.png)  
 
 #### Architectural Elements
 What are the elements composing a model and how this elements communicate?  
