@@ -1,23 +1,23 @@
 # Distributed Systems
 
-NEXT: Coulouris, 2nd
+NEXT: Coulouris, 2.3
 
 Some concerns of distributed systems are:
-* Security: a DS is so secre as the most unsecure part of it.
-* Scalability
-* Failure handling
+* **Security**: a DS is so secre as the most unsecure part of it.
+* **Scalability**
+* **Failure handling**
 	Strategies:
 	* Detecting failure
 	* Masking failure
 	* Failure tolerance
 	* Failure recovery
 	* Redundancy
-* Independent failure of a component
-* Concurrency of components
-* No global clock: there are limits to the accuracy with which the computers in a network can synchronize their clocks – there is no single global notion of the correct time.
-* Heterogeneity
-* Openness: how reusable are the features of a certain distributed system.
-* Transparency: the internal details must remain transparent to the user.
+* **Independent failure of a component**
+* **Concurrency of components**
+* **No global clock**: there are limits to the accuracy with which the computers in a network can synchronize their clocks – there is no single global notion of the correct time. All information flows in between components through `messages`.
+* **Heterogeneity**
+* **Openness**: how reusable are the features of a certain distributed system.
+* **Transparency**: the internal details must remain transparent to the user.
 	* `Access transparency` enables local and remote resources to be accessed using identical operations.
 	* `Location transparency` enables resources to be accessed without knowledge of their physical or network location (for example, which building or IP address).
 	* `Concurrency transparency` enables several processes to operate concurrently using shared resources without interference between them
