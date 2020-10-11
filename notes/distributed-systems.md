@@ -50,4 +50,18 @@ It is crucial in architectures, in terms of performance, security and reliabilit
 * **Mobile Code**: extend the functionality of standard services such as the web. Potential security risks ahead.
 * **Mobile Agents**: replace remote invocations by localizing them on a client agent that gets more importance in the communication, freeing the server counterpart.
 
+### Architectural patterns
+* **Layering**: type of abstraction where a given layer provides service to layers below, and at the time can receive services from layers below. **Middleware** can be used to mask heterogeneity.
+* **Tiered architecture**: complementary to layering, different parts have different responsabilities, each tiet tends to be a physical device. For example in **three-tier**:
+1. **presentation logic**, which is concerned with handling user interaction and updating the view of the application as presented to the user.
+1. **application logic**, which is concerned with the detailed application-specific processing associated with the application (also referred to as the business logic, although the concept is not limited only to business applications)
+1. **data logic**, which is concerned with the persistent storage of the application, typically in a database management system.
+* **Thin-client**: most of the responsability moved to the cloud and client only acts as a display.
 
+### Middleware
+The top-level categorization of middleware is driven by the choice of communicating entities and associated communication paradigms, and follows five of the main architectural models:
+1. distributed objects
+1. distributed components
+1. publish-subscribe systems
+1. message queues
+1. web services
