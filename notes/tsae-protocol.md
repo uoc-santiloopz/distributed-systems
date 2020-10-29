@@ -43,4 +43,33 @@ There are *two versions* of the TSAE protocol: one that requires `loosely-synchr
 One important feature of `TSAE` is that it *delivers messages in batches*. Consider the stream of messages sent from a particular principal. Those messages will be received by other principals in batches, where each batch is a run of messages, with no messages missing in the middle of the run. When a principal receives a batch, the run of messages will immediately follow any messages already received from that sender. In this way principals receive streams of messages, without ever observing a “gap” in the sequence.
 The `TSAE protocol` provides additional features that are necessary for information services. The protocol can be composed with a `message ordering component` to produce *specific message ordering guarantees*. The ordering component makes use of the batching property to reduce overhead.  
 Timestamps are used in every component to represent temporal relations and to name events. A timestamp consists of a sample of the clock at a host, and is represented as the tuple The clock resolution must be fine enough that every important event in a principal, such as sending a message or performing anti-entropy, can be given a unique timestamp.
-Timestamps can be organized into `timestamp vectors`. A timestamp vector is a set of timestamps, each from a different principal, indexed by their host identifiers. It represents a snapshot of the state of communication in a system. In particular, it represents a cut of the communication.
+Timestamps can be organized into `timestamp vectors`. A timestamp vector is a set of timestamps, each from a different principal, indexed by their host identifiers. It represents a snapshot of the state of communication in a system. In particular, it represents a cut of the communication.  
+
+### The message log
+The `message log` contains messages that have been received by a `principal`. A `timestamped message` is entered into the log *on receipt*, and removed when all other principals have also received it.  
+Principals maintain a `summary timestamp vector` to record what updates they have observed. The vector contains *one timestamp for every group member*, and each member has received every message with lesser timestamps.  
+
+A	1	3	5	12			12
+B	3	 					 3
+C	2	3	4				 4
+
+// Message log 				// Summary Vector
+
+Recall that messages are transmitted in batches, and that there are never gaps in the `message sequence`, so the timestamp of the latest message indicates that every message with an earlier timestamp has been received.  
+It is used during an `anti-entropy exchange` to determine which messages have not yet been received by a principal, and two principals can compare their `summary vectors` to measure how far out of date they are with respect to each other.  
+Each principal also maintains information about `message acknowledgments`. Rather than explicitly send an `acknowledgment` for every message, the information in the summary vector is used to build a summary acknowledgment. As long as principals use `loosely-synchronized clocks`, the smallest timestamp in the summary vector can be used as a single acknowledgement timestamp for all messages.
+
+### Purging the message log
+The `message log` must be periodically `purged` so that it does not grow without bound. Even if there is no log, as in applications that work directly from an application database unneeded `death certificates` must be purged. Message purging is correct if it does not interfere with message propagation, and if every message is eventually purged.  
+Whether a `message log` is used or not, a `message or death certificate can safely be removed when every member principal has received it`. This condition can be detected when *the message is earlier than all events in the acknowledgment timestamp vector*.
+
+
+Host B executes operation B4
+Host C executes operation C3
+Host A does an anti-entropy session with host C
+Host B executes operation B5
+Host A does an anti-entropy session with host B
+Host A executes operation A4
+Host C executes operation C4
+Host A does an anti-entropy session with host C
+Host A does an anti-entropy session with host B
