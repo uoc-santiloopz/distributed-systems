@@ -11,3 +11,4 @@ do
   echo $file
   cat $2 | cat - $file > /tmp/out && mv /tmp/out $file
 done
+
