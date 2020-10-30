@@ -23,7 +23,6 @@ package recipes_service.tsae.data_structures;
 
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -73,8 +72,7 @@ public class TimestampVector implements Serializable{
 	 * merge in another vector, taking the elementwise maximum
 	 * @param tsVector (a timestamp vector)
 	 */
-	public void updateMax(TimestampVector tsVector){
-	}
+	public void updateMax(TimestampVector tsVector){ }
 	
 	/**
 	 * 
@@ -92,8 +90,7 @@ public class TimestampVector implements Serializable{
 	 * After merging, local node will have the smallest timestamp for each node.
 	 *  @param tsVector (timestamp vector)
 	 */
-	public void mergeMin(TimestampVector tsVector){
-	}
+	public void mergeMin(TimestampVector tsVector){ }
 	
 	/**
 	 * clone
@@ -107,7 +104,9 @@ public class TimestampVector implements Serializable{
 	/**
 	 * equals
 	 */
-	public boolean equals(Timestamp obj) {
+	public boolean equals(Object obj) {
+		// TODO
+		System.out.println("ACK" + obj);
 		return false;
 	}
 

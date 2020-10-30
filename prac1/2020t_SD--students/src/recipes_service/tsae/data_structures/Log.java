@@ -90,7 +90,7 @@ public class Log implements Serializable{
 	 * @param sum
 	 * @return list of operations
 	 */
-	public List<Operation> listNewer(TimestampVector sum){
+	public List<Operation> listNewer(TimestampVector sum) {
 
 		return null;
 	}
@@ -110,6 +110,9 @@ public class Log implements Serializable{
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		// TODO
+		Log compare = (Log) obj;
+		System.out.println("EQUALS" + compare.log);
 		
 		// return generated automatically. Remove it when implementing your solution 
 		return false;
