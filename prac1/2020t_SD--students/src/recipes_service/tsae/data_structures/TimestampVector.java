@@ -65,9 +65,8 @@ public class TimestampVector implements Serializable{
 	 * @param timestamp
 	 */
 	public void updateTimestamp(Timestamp timestamp){
-		LSimLogger.log(Level.TRACE, "Updating the TimestampVectorInserting with the timestamp: "+timestamp);
-
-		// ...
+		LSimLogger.log(Level.TRACE, "Updating the TimestampVectorInserting with the timestamp: " + timestamp);
+		this.timestampVector.put(timestamp.getHostid(), timestamp);
 	}
 	
 	/**
@@ -83,10 +82,8 @@ public class TimestampVector implements Serializable{
 	 * @return the last timestamp issued by node that has been
 	 * received.
 	 */
-	public Timestamp getLast(String node){
-		
-		// return generated automatically. Remove it when implementing your solution 
-		return null;
+	public Timestamp getLast(String node) {
+		return this.timestampVector.get(node);
 	}
 	
 	/**
@@ -110,9 +107,7 @@ public class TimestampVector implements Serializable{
 	/**
 	 * equals
 	 */
-	public boolean equals(Object obj){
-		
-		// return generated automatically. Remove it when implementing your solution 
+	public boolean equals(Timestamp obj) {
 		return false;
 	}
 

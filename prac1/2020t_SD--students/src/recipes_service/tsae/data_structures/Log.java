@@ -21,11 +21,7 @@
 package recipes_service.tsae.data_structures;
 
 import java.io.Serializable;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import recipes_service.data.Operation;
@@ -72,11 +68,17 @@ public class Log implements Serializable{
 	 * @return true if op is inserted, false otherwise.
 	 */
 	public boolean add(Operation op){
-		// ....
-		System.out.println(op);
-		System.out.println(this.log);
-		
-		// return generated automatically. Remove it when implementing your solution 
+		List<Operation> currentLog = this.log.get(op.getTimestamp().getHostid());
+
+		if (currentLog.isEmpty()) {
+			currentLog.add(op);
+			return true;
+		} else {
+			if (op.getTimestamp().compare(currentLog.get(currentLog.size() - 1).getTimestamp()) > 0) {
+				currentLog.add(op);
+				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -90,7 +92,6 @@ public class Log implements Serializable{
 	 */
 	public List<Operation> listNewer(TimestampVector sum){
 
-		// return generated automatically. Remove it when implementing your solution 
 		return null;
 	}
 	
