@@ -110,12 +110,8 @@ public class Log implements Serializable{
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		// TODO
-		Log compare = (Log) obj;
-		System.out.println("EQUALS" + compare.log);
-		
-		// return generated automatically. Remove it when implementing your solution 
-		return false;
+		Log log = (Log) obj;
+		return this.toString().equals(log.toString());
 	}
 
 	/**
