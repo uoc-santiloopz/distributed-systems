@@ -41,9 +41,9 @@ import lsim.library.api.LSimLogger;
  */
 public class Log implements Serializable{
 	// Only for the zip file with the correct solution of phase1.Needed for the logging system for the phase1. sgeag_2018p 
-//	private transient LSimCoordinator lsim = LSimFactory.getCoordinatorInstance();
+	//	private transient LSimCoordinator lsim = LSimFactory.getCoordinatorInstance();
 	// Needed for the logging system sgeag@2017
-//	private transient LSimWorker lsim = LSimFactory.getWorkerInstance();
+	//	private transient LSimWorker lsim = LSimFactory.getWorkerInstance();
 
 	private static final long serialVersionUID = -4864990265268259700L;
 	/**
@@ -73,6 +73,8 @@ public class Log implements Serializable{
 	 */
 	public boolean add(Operation op){
 		// ....
+		System.out.println(op);
+		System.out.println(this.log);
 		
 		// return generated automatically. Remove it when implementing your solution 
 		return false;

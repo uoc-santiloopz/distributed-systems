@@ -64,12 +64,44 @@ The `message log` must be periodically `purged` so that it does not grow without
 Whether a `message log` is used or not, a `message or death certificate can safely be removed when every member principal has received it`. This condition can be detected when *the message is earlier than all events in the acknowledgment timestamp vector*.
 
 
-Host B executes operation B4
-Host C executes operation C3
-Host A does an anti-entropy session with host C
-Host B executes operation B5
-Host A does an anti-entropy session with host B
-Host A executes operation A4
-Host C executes operation C4
-Host A does an anti-entropy session with host C
-Host A does an anti-entropy session with host B
+### Classes available for TSAE operations
+```java
+class TimeStamp {
+	hostId host;
+	clockSample clock;
+
+	public boolean sameClock(timestamp t);
+	public boolean lessThan(timestamp t);
+}
+
+class TimeStampVector {
+	List<TimeStamp> timestamps;
+	
+	public void update(principalId);
+	public void updateMax(timestampVector);
+
+	public boolean earlierThan(timestamp);
+	public boolean laterThan(timestamp);
+	public boolean concurrentWith(timestamp);
+
+	public boolean earlierThan(timestampVector);
+	public boolean laterThan(timestampVector);
+	public boolean concurrentWith(timestampVector);
+
+	// returns the smaller timestamp in the vector
+	public TimeStamp minElement();
+}
+
+class MsgLog {
+	List<Message> messages;
+
+	public void add(principalId, timestamp, message);
+	public void deliver(principalId, timestamp);
+	public void remove(principalId, timestamp, message);
+
+	public msgList listNewer(timeStampVector);
+	public msgList listOlder(timeStampVector);
+
+	public msgList listMsg(timeStampVector);
+}
+```
