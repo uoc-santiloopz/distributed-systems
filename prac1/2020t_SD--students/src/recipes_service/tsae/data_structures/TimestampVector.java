@@ -23,6 +23,7 @@ package recipes_service.tsae.data_structures;
 
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -38,9 +39,9 @@ import lsim.library.api.LSimLogger;
  */
 public class TimestampVector implements Serializable{
 	// Only for the zip file with the correct solution of phase1.Needed for the logging system for the phase1. sgeag_2018p 
-//	private transient LSimCoordinator lsim = LSimFactory.getCoordinatorInstance();
+	//	private transient LSimCoordinator lsim = LSimFactory.getCoordinatorInstance();
 	// Needed for the logging system sgeag@2017
-//	private transient LSimWorker lsim = LSimFactory.getWorkerInstance();
+	//	private transient LSimWorker lsim = LSimFactory.getWorkerInstance();
 	
 	private static final long serialVersionUID = -765026247959198886L;
 	/**
@@ -105,9 +106,8 @@ public class TimestampVector implements Serializable{
 	 * equals
 	 */
 	public boolean equals(Object obj) {
-		// TODO
-		System.out.println("ACK" + obj);
-		return false;
+		TimestampVector ts = (TimestampVector) obj;
+		return this.toString().equals(ts.toString());
 	}
 
 	/**
