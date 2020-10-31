@@ -70,15 +70,18 @@ public class Log implements Serializable{
 	public boolean add(Operation op){
 		List<Operation> currentLog = this.log.get(op.getTimestamp().getHostid());
 
+		// add if empty
 		if (currentLog.isEmpty()) {
 			currentLog.add(op);
 			return true;
-		} else {
-			if (op.getTimestamp().compare(currentLog.get(currentLog.size() - 1).getTimestamp()) > 0) {
-				currentLog.add(op);
-				return true;
-			}
 		}
+
+		// add if more recent
+		if (op.getTimestamp().compare(currentLog.get(currentLog.size() - 1).getTimestamp()) > 0) {
+			currentLog.add(op);
+			return true;
+		}
+
 		return false;
 	}
 	
