@@ -48,4 +48,5 @@ The `two-phase commit protocol` is designed to allow any participant to abort it
 participant votes to commit a transaction, it must ensure that it will eventually be able to carry out its part of the commit protocol, even if it fails and is replaced in the interim. A participant in a transaction is said to be in a prepared state for a transaction if it will eventually be able to commit it. To make sure of this, each participant saves in permanent storage all of the objects that it has altered in the transaction, together with its status – prepared.  
 In the second phase of the protocol, every participant in the transaction carries out the `joint decision`. If any one participant votes to `abort`, then the decision must be to abort the transaction. If all the participants vote to commit, then the decision is to commit the transaction.
 
-### The two phase commit protocol
+### The two phase commit protocol (page 733/740)
+The two-phase commit protocol consists of a **voting phase** and a **completion phase**. By the end of step 2, the coordinator and all the participants that voted **Yes** are prepared to commit. By the end of step 3, the transaction is effectively completed.
