@@ -2,7 +2,9 @@
 
 
 1. [Concepts](concepts.md)
+1. [Coordination and Agreement](coordination-and-agreement.md)
 1. [Distributed Systems](distributed-systems.md)
 1. [Course Resources](resources.md)
 1. [Time and Global States](time-and-global-states.md)
+1. [Transactions and Concurrency Control](transactions-and-concurrency.md)
 1. [TSAE Protocol](tsae-protocol.md)
