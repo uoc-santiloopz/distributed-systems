@@ -68,7 +68,8 @@ public class Log implements Serializable{
 	 * @return true if op is inserted, false otherwise.
 	 */
 	public boolean add(Operation op){
-		List<Operation> currentLog = this.log.get(op.getTimestamp().getHostid());
+		String participantId = op.getTimestamp().getHostid();
+		List<Operation> currentLog = log.get(participantId);
 
 		// add if empty
 		if (currentLog.isEmpty()) {
@@ -76,8 +77,9 @@ public class Log implements Serializable{
 			return true;
 		}
 
+		Operation lastOperation = currentLog.get(currentLog.size() - 1);
 		// add if more recent
-		if (op.getTimestamp().compare(currentLog.get(currentLog.size() - 1).getTimestamp()) > 0) {
+		if (op.getTimestamp().compare(lastOperation.getTimestamp()) > 0) {
 			currentLog.add(op);
 			return true;
 		}
@@ -113,8 +115,11 @@ public class Log implements Serializable{
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		Log log = (Log) obj;
-		return this.toString().equals(log.toString());
+		if (obj instanceof Log) {
+			Log log = (Log) obj;
+			return this.equals(log);
+		}
+		return false;
 	}
 
 	/**
