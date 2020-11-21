@@ -1,0 +1,9 @@
+# IDE
+.metadata/
+2020t.iml
+
+# Build
+bin/
+
+# Logs
+lsimLogs/
