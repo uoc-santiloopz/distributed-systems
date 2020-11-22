@@ -24,6 +24,7 @@ package recipes_service.tsae.data_structures;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -73,7 +74,20 @@ public class TimestampVector implements Serializable{
 	 * merge in another vector, taking the elementwise maximum
 	 * @param tsVector (a timestamp vector)
 	 */
-	public void updateMax(TimestampVector tsVector){ }
+	public void updateMax(TimestampVector tsVector) {
+		// for each participant id contained in the foreign vector
+		// TODO: include and understand for iterations in Java
+		for (String participantId : tsVector.timestampVector.keySet()) {
+			Timestamp foreignVectorTimestamp = tsVector.getLast(participantId);
+			Timestamp currentTimestamp = this.getLast(participantId);
+			// adds the participant if it does not exist in the current vector otherwise update the value if its older
+			if (currentTimestamp == null) {
+				this.timestampVector.put(participantId, foreignVectorTimestamp);
+			} else if (currentTimestamp.compare(foreignVectorTimestamp) < 0) {
+				this.timestampVector.replace(participantId, foreignVectorTimestamp);
+			}
+		}
+	}
 	
 	/**
 	 * 
@@ -91,15 +105,32 @@ public class TimestampVector implements Serializable{
 	 * After merging, local node will have the smallest timestamp for each node.
 	 *  @param tsVector (timestamp vector)
 	 */
-	public void mergeMin(TimestampVector tsVector){ }
+	public void mergeMin(TimestampVector tsVector) {
+		// for each participant id contained in the foreign vector
+		for (String participantId : tsVector.timestampVector.keySet()) {
+			Timestamp foreignVectorTimestamp = tsVector.getLast(participantId);
+			Timestamp timestampActual = this.timestampVector.get(participantId);
+			// adds the participant if it does not exist in the current vector otherwise update the value of its newer
+			if (timestampActual == null) {
+				this.timestampVector.put(participantId, foreignVectorTimestamp);
+			} else if (timestampActual.compare(foreignVectorTimestamp) > 0) {
+				timestampVector.replace(timestampActual.getHostid(), foreignVectorTimestamp);
+			}
+		}
+	}
 	
 	/**
 	 * clone
 	 */
 	public TimestampVector clone(){
-		
-		// return generated automatically. Remove it when implementing your solution 
-		return null;
+		List<String> participantIds = new ArrayList<String>(timestampVector.keySet());
+		TimestampVector tsVectorClone = new TimestampVector(participantIds);
+
+		for (String key : timestampVector.keySet()) {
+			Timestamp ts = this.timestampVector.get(key);
+			tsVectorClone.timestampVector.put(ts.getHostid(), ts);
+		}
+		return tsVectorClone;
 	}
 	
 	/**
