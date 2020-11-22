@@ -92,14 +92,32 @@ public class Log implements Serializable{
 	 * contained in the log that have not been seen by
 	 * the proprietary of the summary.
 	 * Returns them in an ordered list.
-	 * @param sum
+	 * @param summary
 	 * @return list of operations
 	 */
-	public List<Operation> listNewer(TimestampVector sum) {
+	public List<Operation> listNewer(TimestampVector summary) {
+		List<Operation> newerOperations = new Vector<Operation>();
 
-		return null;
+		// Iterate over every node in the log and buffer all missing operations
+		for (Enumeration<String> keys = this.log.keys(); keys.hasMoreElements();) {
+			// Get the current key
+			String currentNode = keys.nextElement();
+			// Retrieve the log operations for the current node
+			List<Operation> currentNodeOperations = this.log.get(currentNode);
+			Timestamp lastNodeTimestamp = summary.getLast(currentNode);
+			// Iterate over operations and add the ones missing in log
+			for (Operation currentOperation : currentNodeOperations) {
+				// Retrieve timestamp for operation
+				Timestamp currentOperationTimestamp = currentOperation.getTimestamp();
+				// Check if operation is already registered
+				if (currentOperationTimestamp.compare(lastNodeTimestamp) > 0) {
+					newerOperations.add(currentOperation);
+				}
+			}
+		}
+		return newerOperations;
 	}
-	
+
 	/**
 	 * Removes from the log the operations that have
 	 * been acknowledged by all the members

@@ -76,7 +76,6 @@ public class TimestampVector implements Serializable{
 	 */
 	public void updateMax(TimestampVector tsVector) {
 		// for each participant id contained in the foreign vector
-		// TODO: include and understand for iterations in Java
 		for (String participantId : tsVector.timestampVector.keySet()) {
 			Timestamp foreignVectorTimestamp = tsVector.getLast(participantId);
 			Timestamp currentTimestamp = this.getLast(participantId);

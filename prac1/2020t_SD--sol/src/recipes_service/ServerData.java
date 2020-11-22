@@ -32,10 +32,8 @@ import recipes_service.communication.Host;
 import recipes_service.communication.Hosts;
 import recipes_service.data.AddOperation;
 import recipes_service.data.Operation;
-import recipes_service.data.OperationType;
 import recipes_service.data.Recipe;
 import recipes_service.data.Recipes;
-import recipes_service.data.RemoveOperation;
 import recipes_service.tsae.data_structures.Log;
 import recipes_service.tsae.data_structures.Timestamp;
 import recipes_service.tsae.data_structures.TimestampMatrix;
@@ -95,7 +93,7 @@ public class ServerData {
 	
 	/**
 	 * Starts the execution
-	 * @param participantss
+	 * @param participants
 	 */
 	public void startTSAE(Hosts participants){
 		this.participants = participants;
