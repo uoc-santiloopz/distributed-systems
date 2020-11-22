@@ -117,7 +117,7 @@ public class Log implements Serializable{
 	public boolean equals(Object obj) {
 		if (obj instanceof Log) {
 			Log log = (Log) obj;
-			return this.equals(log);
+			return this.toString().equals(log.toString());
 		}
 		return false;
 	}
