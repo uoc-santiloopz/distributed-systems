@@ -21,21 +21,12 @@
 package recipes_service.tsae.sessions;
 
 
-import java.io.IOException;
-import java.net.Socket;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
 import communication.ObjectInputStream_DS;
 import communication.ObjectOutputStream_DS;
 import edu.uoc.dpcs.lsim.logger.LoggerManager.Level;
+import lsim.library.api.LSimLogger;
 import recipes_service.ServerData;
-import recipes_service.communication.Message;
-import recipes_service.communication.MessageAErequest;
-import recipes_service.communication.MessageEndTSAE;
-import recipes_service.communication.MessageOperation;
-import recipes_service.communication.MsgType;
+import recipes_service.communication.*;
 import recipes_service.data.AddOperation;
 import recipes_service.data.Operation;
 import recipes_service.data.OperationType;
@@ -44,7 +35,9 @@ import recipes_service.tsae.data_structures.Log;
 import recipes_service.tsae.data_structures.TimestampMatrix;
 import recipes_service.tsae.data_structures.TimestampVector;
 
-import lsim.library.api.LSimLogger;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.List;
 
 /**
  * @author Joan-Manuel Marques

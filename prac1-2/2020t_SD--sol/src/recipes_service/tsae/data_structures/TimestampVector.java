@@ -21,17 +21,15 @@
 package recipes_service.tsae.data_structures;
 
 
+import edu.uoc.dpcs.lsim.logger.LoggerManager.Level;
+import lsim.library.api.LSimLogger;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-
-import edu.uoc.dpcs.lsim.logger.LoggerManager.Level;
-import lsim.library.api.LSimLogger;
 
 /**
  * @author Joan-Manuel Marques
@@ -67,7 +65,9 @@ public class TimestampVector implements Serializable{
 	 */
 	public void updateTimestamp(Timestamp timestamp){
 		LSimLogger.log(Level.TRACE, "Updating the TimestampVectorInserting with the timestamp: " + timestamp);
-		this.timestampVector.put(timestamp.getHostid(), timestamp);
+		if (timestamp != null) {
+			this.timestampVector.put(timestamp.getHostid(), timestamp);
+		}
 	}
 	
 	/**

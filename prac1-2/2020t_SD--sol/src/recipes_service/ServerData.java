@@ -20,13 +20,6 @@
 
 package recipes_service;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Timer;
-import java.util.Vector;
-
-import edu.uoc.dpcs.lsim.logger.LoggerManager.Level;
-import lsim.library.api.LSimLogger;
 import recipes_service.activity_simulation.SimulationData;
 import recipes_service.communication.Host;
 import recipes_service.communication.Hosts;
@@ -39,6 +32,10 @@ import recipes_service.tsae.data_structures.Timestamp;
 import recipes_service.tsae.data_structures.TimestampMatrix;
 import recipes_service.tsae.data_structures.TimestampVector;
 import recipes_service.tsae.sessions.TSAESessionOriginatorSide;
+
+import java.util.List;
+import java.util.Timer;
+import java.util.Vector;
 /**
  * @author Joan-Manuel Marques
  * December 2012
