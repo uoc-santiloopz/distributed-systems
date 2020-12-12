@@ -161,9 +161,9 @@ public class ServerData {
 		TimestampVector sum = ack.minTimestampVector();
 		
 		List<Timestamp> newTombstones = new Vector<Timestamp>();
-		for(int i=0; i<tombstones.size(); i++){
-			if (tombstones.get(i).compare(sum.getLast(tombstones.get(i).getHostid()))>0){
-				newTombstones.add(tombstones.get(i));
+		for (Timestamp tombstone : tombstones) {
+			if (tombstone.compare(sum.getLast(tombstone.getHostid())) > 0) {
+				newTombstones.add(tombstone);
 			}
 		}
 		tombstones = newTombstones;
