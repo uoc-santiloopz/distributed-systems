@@ -135,8 +135,8 @@ public class TSAESessionOriginatorSide extends TimerTask{
 				List<Operation> operations = log.listNewer(partnerSummary);
 
 				// send operations
-				for (Operation o : operations) {
-					MessageOperation messageOperation = new MessageOperation(o);
+				for (Operation operation : operations) {
+					MessageOperation messageOperation = new MessageOperation(operation);
 					out.writeObject(messageOperation);
 					LSimLogger.log(Level.TRACE, "[TSAESessionOriginatorSide] [session: "+current_session_number+"] sent message: "+messageOperation);
 				}
