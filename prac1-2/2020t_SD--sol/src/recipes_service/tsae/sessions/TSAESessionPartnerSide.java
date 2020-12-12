@@ -92,13 +92,15 @@ public class TSAESessionPartnerSide extends Thread{
 				}
 
 				// send to originator: local's summary and ack
-				synchronized (serverData) {
-					TimestampVector localSummary = serverData.getSummary().clone();
-					serverData.getAck().update(serverData.getId(), localSummary);
-					TimestampMatrix localAck = serverData.getAck().clone();
-					msg = new MessageAErequest(localSummary, localAck);
-				}
+				TimestampVector localSummary = null;
+				TimestampMatrix localAck = null;
 
+				synchronized (serverData) {
+					localSummary = serverData.getSummary().clone();
+					serverData.getAck().update(serverData.getId(), localSummary);
+					localAck = serverData.getAck().clone();
+				}
+				msg = new MessageAErequest(localSummary, localAck);
 				msg.setSessionNumber(current_session_number);
 				out.writeObject(msg);
 				LSimLogger.log(Level.TRACE, "[TSAESessionPartnerSide] [session: "+current_session_number+"] sent message: "+ msg);
