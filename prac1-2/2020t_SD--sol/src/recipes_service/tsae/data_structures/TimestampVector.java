@@ -48,12 +48,11 @@ public class TimestampVector implements Serializable{
 	 * For each node, stores the timestamp of the last received operation.
 	 */
 	
-	private ConcurrentHashMap<String, Timestamp> timestampVector= new ConcurrentHashMap<String, Timestamp>();
+	private final ConcurrentHashMap<String, Timestamp> timestampVector= new ConcurrentHashMap<String, Timestamp>();
 	
 	public TimestampVector (List<String> participants){
 		// create and empty TimestampVector
-		for (Iterator<String> it = participants.iterator(); it.hasNext(); ){
-			String id = it.next();
+		for (String id : participants) {
 			// when sequence number of timestamp < 0 it means that the timestamp is the null timestamp
 			timestampVector.put(id, new Timestamp(id, Timestamp.NULL_TIMESTAMP_SEQ_NUMBER));
 		}
@@ -137,6 +136,9 @@ public class TimestampVector implements Serializable{
 	 */
 	public boolean equals(Object obj) {
 		TimestampVector ts = (TimestampVector) obj;
+		if (ts == null) {
+			return false;
+		}
 		return this.toString().equals(ts.toString());
 	}
 
@@ -146,7 +148,7 @@ public class TimestampVector implements Serializable{
 	@Override
 	public synchronized String toString() {
 		String all="";
-		if(timestampVector==null){
+		if(timestampVector == null){
 			return all;
 		}
 		for(Enumeration<String> en=timestampVector.keys(); en.hasMoreElements();){

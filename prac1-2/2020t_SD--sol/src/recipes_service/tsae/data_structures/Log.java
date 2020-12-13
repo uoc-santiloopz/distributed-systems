@@ -125,7 +125,31 @@ public class Log implements Serializable{
 	 * ackSummary. 
 	 * @param ack: ackSummary.
 	 */
-	public void purgeLog(TimestampMatrix ack){
+	public synchronized void purgeLog(TimestampMatrix ack){
+
+		TimestampVector minAck = ack.minTimestampVector();
+
+		// retrieve host's keys
+		Set<String> hosts = log.keySet();
+
+		for (String host : hosts) {
+			// Extract list of ops from a given host
+			List<Operation> logOp = log.get(host);
+			// Obtain last host timestamp
+			Timestamp lastTimestamp = minAck.getLast(host);
+
+			// Basically here we remove all operations which are older
+			// Than the last timestamp
+			if (lastTimestamp != null) {
+				for (int i = 0; i < logOp.size(); i++) {
+					Operation op = logOp.get(i);
+					if (!(op.getTimestamp().compare(lastTimestamp) > 0)) {
+						logOp.remove(i);
+					}
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -147,12 +171,12 @@ public class Log implements Serializable{
 	public synchronized String toString() {
 		String name="";
 		for(Enumeration<List<Operation>> en=log.elements();
-		en.hasMoreElements(); ){
-		List<Operation> sublog=en.nextElement();
-		for(ListIterator<Operation> en2=sublog.listIterator(); en2.hasNext();){
-			name+=en2.next().toString()+"\n";
+			en.hasMoreElements(); ){
+			List<Operation> sublog=en.nextElement();
+			for (Operation operation : sublog) {
+				name += operation.toString() + "\n";
+			}
 		}
-	}
 		
 		return name;
 	}
