@@ -23,10 +23,7 @@ package recipes_service;
 import recipes_service.activity_simulation.SimulationData;
 import recipes_service.communication.Host;
 import recipes_service.communication.Hosts;
-import recipes_service.data.AddOperation;
-import recipes_service.data.Operation;
-import recipes_service.data.Recipe;
-import recipes_service.data.Recipes;
+import recipes_service.data.*;
 import recipes_service.tsae.data_structures.Log;
 import recipes_service.tsae.data_structures.Timestamp;
 import recipes_service.tsae.data_structures.TimestampMatrix;
@@ -137,18 +134,22 @@ public class ServerData {
 	public synchronized void addRecipe(String recipeTitle, String recipe) {
 
 		Timestamp timestamp= nextTimestamp();
-		Recipe rcpe = new Recipe(recipeTitle, recipe, id, timestamp);
-		Operation op=new AddOperation(rcpe, timestamp);
+		Recipe recipeToAdd = new Recipe(recipeTitle, recipe, id, timestamp);
+		Operation op=new AddOperation(recipeToAdd, timestamp);
 
 		this.log.add(op);
 		this.summary.updateTimestamp(timestamp);
-		this.recipes.add(rcpe);
-//		LSimLogger.log(Level.TRACE,"The recipe '"+recipeTitle+"' has been added");
-
+		this.recipes.add(recipeToAdd);
 	}
 	
-	public synchronized void removeRecipe(String recipeTitle){
-		System.err.println("Error: removeRecipe method (recipesService.serverData) not yet implemented");
+	public synchronized void removeRecipe(String recipeTitle) {
+		Timestamp timestamp = nextTimestamp();
+		Recipe recipe = this.recipes.get(recipeTitle);
+		Operation removeOperation = new RemoveOperation(recipeTitle, recipe.getTimestamp(), timestamp);
+
+		this.log.add(removeOperation);
+		this.summary.updateTimestamp(timestamp);
+		this.recipes.remove(recipeTitle);
 	}
 	
 	private synchronized void purgeTombstones(){

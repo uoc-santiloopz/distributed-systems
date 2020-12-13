@@ -21,6 +21,7 @@
 package recipes_service.tsae.data_structures;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
@@ -75,6 +76,11 @@ public class TimestampMatrix implements Serializable {
      * @param tsVector
      */
     public void update(String node, TimestampVector tsVector) {
+        if (timestampMatrix.get(node) == null) {
+            timestampMatrix.put(node, tsVector);
+        } else {
+            timestampMatrix.replace(node, tsVector);
+        }
     }
 
     /**
@@ -82,18 +88,40 @@ public class TimestampMatrix implements Serializable {
      * the timestamp known by all participants
      */
     public TimestampVector minTimestampVector() {
+        TimestampVector minVector = null;
+        Set<String> hosts = timestampMatrix.keySet();
 
-        // return generated automatically. Remove it when implementing your solution
-        return null;
+        // Loop to find the min timestamp vector
+        for (String host : hosts) {
+            TimestampVector tsVector = timestampMatrix.get(host);
+            if (minVector == null) {
+                // initialize min vector in case it is not
+                minVector = tsVector.clone();
+            } else {
+                // else set min vector to the min of both current host vector and buffered minVector
+                minVector.mergeMin(tsVector);
+            }
+        }
+        return minVector;
     }
 
     /**
      * clone
      */
     public TimestampMatrix clone() {
+        Set<String> hosts = timestampMatrix.keySet();
+        ConcurrentHashMap<String, TimestampVector> newMatrix = new ConcurrentHashMap<String, TimestampVector>();
 
-        // return generated automatically. Remove it when implementing your solution
-        return null;
+        for (String host : hosts) {
+            TimestampVector cloneTSV = timestampMatrix.get(host).clone();
+            newMatrix.put(host, cloneTSV);
+        }
+
+        List<String> hostsList = new ArrayList<String>(hosts);
+        TimestampMatrix clonedTSMatrix = new TimestampMatrix(hostsList);
+        clonedTSMatrix.timestampMatrix = newMatrix;
+
+        return clonedTSMatrix;
     }
 
     /**
@@ -101,9 +129,10 @@ public class TimestampMatrix implements Serializable {
      */
     @Override
     public boolean equals(Object obj) {
-
-        // return generated automatically. Remove it when implementing your solution
-        return false;
+        if (obj == null) {
+            return false;
+        }
+        return this.toString().equals(obj.toString());
     }
 
 
