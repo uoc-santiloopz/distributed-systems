@@ -27,10 +27,7 @@ import lsim.library.api.LSimLogger;
 import recipes_service.ServerData;
 import recipes_service.activity_simulation.SimulationData;
 import recipes_service.communication.*;
-import recipes_service.data.AddOperation;
-import recipes_service.data.Operation;
-import recipes_service.data.OperationType;
-import recipes_service.data.Recipe;
+import recipes_service.data.*;
 import recipes_service.tsae.data_structures.Log;
 import recipes_service.tsae.data_structures.TimestampMatrix;
 import recipes_service.tsae.data_structures.TimestampVector;
@@ -117,9 +114,16 @@ public class TSAESessionOriginatorSide extends TimerTask{
 			while (msg.type() == MsgType.OPERATION) {
 				Operation operation = ((MessageOperation) msg).getOperation();
 				// Add recipe if necessary
-				if (operation.getType() == OperationType.ADD) {
-					Recipe newRecipe = ((AddOperation) operation).getRecipe();
-					serverData.getRecipes().add(newRecipe);
+				synchronized (serverData) {
+					if (operation.getType() == OperationType.ADD) {
+						Recipe newRecipe = ((AddOperation) operation).getRecipe();
+						serverData.getRecipes().add(newRecipe);
+					} else if (operation.getType() == OperationType.REMOVE) {
+						RemoveOperation removeOperation = ((RemoveOperation) operation);
+						if (serverData.getLog().add(removeOperation)) {
+							serverData.getRecipes().remove(removeOperation.getRecipeTitle());
+						}
+					}
 				}
 				// Keep operation in log
 				serverData.getLog().add(operation);

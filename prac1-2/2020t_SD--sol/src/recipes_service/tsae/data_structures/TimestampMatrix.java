@@ -47,7 +47,7 @@ public class TimestampMatrix implements Serializable {
      * @param node
      * @return the timestamp vector of node in this timestamp matrix
      */
-    TimestampVector getTimestampVector(String node) {
+    synchronized TimestampVector getTimestampVector(String node) {
         return timestampMatrix.get(node);
     }
 
@@ -56,7 +56,7 @@ public class TimestampMatrix implements Serializable {
      *
      * @param tsMatrix
      */
-    public synchronized void updateMax(TimestampMatrix tsMatrix) {
+    public  synchronized void updateMax(TimestampMatrix tsMatrix) {
         Set<String> hosts = tsMatrix.timestampMatrix.keySet();
 
         for (String host : hosts) {
@@ -75,7 +75,7 @@ public class TimestampMatrix implements Serializable {
      * @param node
      * @param tsVector
      */
-    public void update(String node, TimestampVector tsVector) {
+    public synchronized void update(String node, TimestampVector tsVector) {
         if (timestampMatrix.get(node) == null) {
             timestampMatrix.put(node, tsVector);
         } else {
@@ -87,7 +87,7 @@ public class TimestampMatrix implements Serializable {
      * @return a timestamp vector containing, for each node,
      * the timestamp known by all participants
      */
-    public TimestampVector minTimestampVector() {
+    public synchronized TimestampVector minTimestampVector() {
         TimestampVector minVector = null;
         Set<String> hosts = timestampMatrix.keySet();
 
@@ -108,7 +108,7 @@ public class TimestampMatrix implements Serializable {
     /**
      * clone
      */
-    public TimestampMatrix clone() {
+    public synchronized TimestampMatrix clone() {
         Set<String> hosts = timestampMatrix.keySet();
         ConcurrentHashMap<String, TimestampVector> newMatrix = new ConcurrentHashMap<String, TimestampVector>();
 
