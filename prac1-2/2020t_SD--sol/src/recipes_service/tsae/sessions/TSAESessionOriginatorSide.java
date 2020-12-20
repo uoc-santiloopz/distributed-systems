@@ -113,12 +113,13 @@ public class TSAESessionOriginatorSide extends TimerTask{
 			// Add operations sent by partner
 			while (msg.type() == MsgType.OPERATION) {
 				Operation operation = ((MessageOperation) msg).getOperation();
-				// Add recipe if necessary
 				synchronized (serverData) {
+					// Add recipe operation
 					if (operation.getType() == OperationType.ADD) {
 						Recipe newRecipe = ((AddOperation) operation).getRecipe();
 						serverData.getRecipes().add(newRecipe);
 					} else if (operation.getType() == OperationType.REMOVE) {
+						// remove operation recipe operation
 						RemoveOperation removeOperation = ((RemoveOperation) operation);
 						if (serverData.getLog().add(removeOperation)) {
 							serverData.getRecipes().remove(removeOperation.getRecipeTitle());
